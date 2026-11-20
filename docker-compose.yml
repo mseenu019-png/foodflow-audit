@@ -1,0 +1,13 @@
+services:
+  foodflow:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      PORT: "8000"
+      DATA_DIR: /data
+    volumes:
+      - foodflow_data:/data
+
+volumes:
+  foodflow_data:

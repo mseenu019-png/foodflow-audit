@@ -142,5 +142,5 @@ class Handler(SimpleHTTPRequestHandler):
             self.json(400,{'error':str(e)})
 
 if __name__=='__main__':
-    os.chdir(ROOT); initialise(); port=int(os.environ.get('PORT','8000')); print(f'Food Audit running at http://localhost:{port}')
-    ThreadingHTTPServer(('127.0.0.1',port),Handler).serve_forever()
+    os.chdir(ROOT); initialise(); host=os.environ.get('HOST','0.0.0.0'); port=int(os.environ.get('PORT','8000')); print(f'Food Audit running at http://{host}:{port}')
+    ThreadingHTTPServer((host,port),Handler).serve_forever()

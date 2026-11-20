@@ -18,6 +18,29 @@ python -m unittest discover -s tests -v
 
 If `python` is not on PATH, use the Python executable in your local runtime or install Python 3.11+.
 
+## Deploy as a public demo
+
+The simplest path is Railway because it detects the included `Dockerfile`, supplies a public HTTPS domain, and supports a persistent volume for this SQLite prototype.
+
+1. Create an empty public GitHub repository and push this project to its `main` branch.
+2. In Railway, create a new project and choose **Deploy from GitHub repo**. Select the repository.
+3. Wait for the Docker build to finish. The app reads Railway's `PORT` variable automatically.
+4. Create and attach a volume at mount path `/data`. The service writes the SQLite database to that path because `DATA_DIR=/data` is already set in the Dockerfile.
+5. Open the service's **Settings → Networking → Public Networking** and select **Generate Domain**. Railway gives you an HTTPS `*.up.railway.app` URL.
+6. Open the public URL, sign in using a demo account, and run the benchmark once.
+
+For a temporary, reset-on-each-deploy showcase, you can omit the volume. Do not omit it if evaluators need to return to the same demo data.
+
+### Docker alternative
+
+With Docker Desktop installed, use the included persistent local volume:
+
+```powershell
+docker compose up --build
+```
+
+Then open `http://localhost:8000`. Stop it with `docker compose down`; the named `foodflow_data` volume preserves the demo database.
+
 ## Demo logins
 
 All demo accounts use password `demo123`.

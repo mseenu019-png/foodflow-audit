@@ -5,6 +5,7 @@ overwritten: every balance is calculated from stock_moves.
 """
 from __future__ import annotations
 
+import os
 import sqlite3
 from contextlib import contextmanager
 from datetime import date, datetime
@@ -12,7 +13,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DB_PATH = ROOT / "data" / "food_audit.db"
+DB_PATH = Path(os.environ.get("DATA_DIR", str(ROOT / "data"))) / "food_audit.db"
 TOLERANCE = Decimal("0.03")
 
 def q(value) -> Decimal:
